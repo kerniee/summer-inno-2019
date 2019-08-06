@@ -55,4 +55,8 @@ def get_message():
     return '', 200
 
 
-bot.polling()
+bot.remove_webhook()
+bot.set_webhook(url=getenv("WEBHOOK_URL") + API_TOKEN)
+
+server.run(host="0.0.0.0",
+           port=int(getenv('PORT', 8443)))
