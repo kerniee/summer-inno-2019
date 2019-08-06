@@ -1,5 +1,5 @@
 import telebot
-from telebot import types
+from flask import Flask, request
 import db
 from os import getenv
 import logging
@@ -11,6 +11,7 @@ telebot.logger.setLevel(logging.INFO)
 API_TOKEN = getenv('API_BOT_TOKEN')
 
 bot = telebot.TeleBot(API_TOKEN)
+server = Flask(__name__)
 qa = [['2+2*2', '6'], ['33+3+3', '39'], ['Three plus four', '7']]
 
 
@@ -43,6 +44,15 @@ def send_question(message):
     else:
         bot.send_message(chat_id=chat_id,
                          text='Try again')
+
+
+@server.route('/' + API_TOKEN, methods=['POST'])
+def get_message():
+    json_update = request.stream.read().decode('utf-8')
+    update = telebot.types.Update.de_json(json_update)
+
+    bot.process_new_updates([update])
+    return '', 200
 
 
 bot.polling()
