@@ -16,7 +16,9 @@ def echo():
         }
     else:
         inp = request.json['request']['original_utterance']
-        if inp == inp[::-1]:
+        if len(inp) > 1:
+            text = 'Скажите одно слово'
+        elif inp == inp[::-1]:
             text = 'Это палиндром! Попробуйте еще раз?'
         else:
             text = 'Это не палиндром! Попробуйте еще раз?'
