@@ -24,7 +24,10 @@ def echo():
         inp = request.json['request']['original_utterance']
 
         if inp.lower() in ('удалить', 'убрать'):
-            db.delete_user(user_id)
+            if not db.delete_user(user_id):
+                text = 'О вас еще нет информации'
+            else:
+                text = 'Удалена вся информация о вас! :)'
         elif inp.lower() in ('мои данные', 'данные'):
             name = db.get_user(user_id).name
             city = db.get_user(user_id).city

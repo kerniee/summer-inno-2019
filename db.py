@@ -25,7 +25,11 @@ def get_user(chat_id):
 
 
 def delete_user(chat_id):
-    User.delete_by_id(chat_id)
+    user = get_user(chat_id)
+    if not user:
+        return False
+    user.delete_instance()
+    return True
 
 
 def get_state(chat_id):
