@@ -20,6 +20,10 @@ def init():
     db.close()
 
 
+def get_user(chat_id):
+    return User.get_or_none(chat_id=chat_id)
+
+
 def get_state(chat_id):
     user = User.get_or_none(chat_id=chat_id)
     if user is None:

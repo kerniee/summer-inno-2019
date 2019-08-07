@@ -1,6 +1,7 @@
 from flask import Flask, request
 from os import getenv
 import db
+import string
 
 server = Flask(__name__)
 
@@ -21,7 +22,11 @@ def echo():
     else:
         state = db.get_state(user_id)
         inp = request.json['request']['original_utterance']
-        if state == 0:
+        if inp.lower() in ('мои данные', 'данные'):
+            name = db.get_user(user_id).name
+            city = db.get_user(user_id).city
+            text = f'Твое имя: {name}\nТвой город: {city}'
+        elif state == 0:
             db.set_name(user_id, inp)
             db.set_state(user_id, 1)
             text = 'Круто! А откуда ты?'
