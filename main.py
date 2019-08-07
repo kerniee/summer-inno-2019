@@ -18,7 +18,7 @@ def echo():
                 'text': 'Привет! Как тебя зовут?'
             }
         }
-        db.set_state(user_id, '0')
+        db.set_state(user_id, 0)
     else:
         state = db.get_state(user_id)
         inp = request.json['request']['original_utterance']
@@ -27,7 +27,8 @@ def echo():
             if not db.delete_user(user_id):
                 text = 'О вас еще нет информации'
             else:
-                text = 'Удалена вся информация о вас! :)'
+                text = 'Удалена вся информация о вас! :)\n Можете снова её добавить. Как вас зовут?'
+                db.set_state(user_id, 0)
         elif inp.lower() in ('мои данные', 'данные'):
             name = db.get_user(user_id).name
             city = db.get_user(user_id).city
