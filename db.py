@@ -4,7 +4,7 @@ db = peewee.SqliteDatabase('users.db')
 
 
 class User(peewee.Model):
-    chat_id = peewee.IntegerField(unique=True)
+    chat_id = peewee.TextField(unique=True)
     state = peewee.IntegerField(default=0)
     name = peewee.TextField(default='')
     password = peewee.TextField(default='')
