@@ -22,7 +22,10 @@ def echo():
     else:
         state = db.get_state(user_id)
         inp = request.json['request']['original_utterance']
-        if inp.lower() in ('мои данные', 'данные'):
+
+        if inp.lower() in ('удалить', 'убрать'):
+            db.delete_user(user_id)
+        elif inp.lower() in ('мои данные', 'данные'):
             name = db.get_user(user_id).name
             city = db.get_user(user_id).city
             text = f'Твое имя: {name}\nТвой город: {city}'
