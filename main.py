@@ -7,7 +7,7 @@ server = Flask(__name__)
 
 @server.route('/', methods=['POST'])
 def echo():
-    user_id = request.json['session']['user_id']
+    user_id = str(request.json['session']['user_id'])
     end = False
     if request.json['session']['new']:
         response = {
