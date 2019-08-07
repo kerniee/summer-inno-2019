@@ -9,7 +9,7 @@ server = Flask(__name__)
 def echo():
     user_id = request.json['session']['user_id']
     end = False
-    if request.json['session']['new']:
+    if request.json['session']['new'] and not db.get_state(user_id):
         response = {
             'version': request.json['version'],
             'session': request.json['session'],
