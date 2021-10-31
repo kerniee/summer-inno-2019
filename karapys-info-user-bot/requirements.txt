@@ -1,0 +1,7 @@
+pydub
+flask
+SpeechRecognition==3.8.1
+peewee==3.10.0
+pyTelegramBotAPI==3.6.6
+requests==2.7.0
+six==1.12.0

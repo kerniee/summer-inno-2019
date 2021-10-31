@@ -1,0 +1,31 @@
+default:
+  image: python
+
+services:
+  - name: parity/parity
+    alias: parity
+    command: ["--chain", "dev",
+              "--jsonrpc-apis", "all",
+              "--jsonrpc-interface", "all",
+              "--jsonrpc-hosts", "all",]
+
+job1:
+  stage: build
+  script:
+    - pip install pylint
+    - pip install -r requirements.txt
+    - pylint -E -d E1101 *.py
+
+job2:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python test.py -v
+  variables:
+    RPC_URL: 'http://parity:8545'
+  except:
+    variables:
+      - $SKIP_TEST
+  only:
+    refs:
+      - master
